@@ -28,7 +28,7 @@ module Sinatra
           :ref => (request.referer || ""),
           :url => request.url,
           :useragent => user_agent
-        }.merge(google_screen_res).merge(google_muid).merge(google_via_and_accept(user_agent)).merge(options)
+        }.merge(google_screen_res(request)).merge(google_muid(request)).merge(google_via_and_accept(request, user_agent)).merge(options)
 
         ad_url = "http://pagead2.googlesyndication.com/pagead/ads?"
         ad_url += options.map { |k, v|
@@ -54,7 +54,7 @@ module Sinatra
       color_array[time.to_i % color_array.size]
     end
 
-    def google_screen_res
+    def google_screen_res(request)
       screen_res =
         request.env["HTTP_UA_PIXELS"] ||
         request.env["HTTP_X_UP_DEVCAP_SCREENPIXELS"] ||
@@ -64,7 +64,7 @@ module Sinatra
       (res_array.size == 2) ? { :u_w => res_array[0], :u_h => res_array[1] } : {}
     end
 
-    def google_muid
+    def google_muid(request)
       muid =
         request.env["HTTP_X_DCMGUID"] ||
         request.env["HTTP_X_UP_SUBNO"] ||
@@ -73,7 +73,7 @@ module Sinatra
       muid ? { :muid => muid } : {}
     end
 
-    def google_via_and_accept(ua)
+    def google_via_and_accept(request, ua)
       return {} if ua
       via_and_accept = {}
       via = request.env["HTTP_VIA"]

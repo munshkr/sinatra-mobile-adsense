@@ -105,68 +105,68 @@ describe "MobileAdsense" do
   describe "::google_screen_res" do
     it "should return 'u_w' and 'u_h' parameters" do
       @request.env["HTTP_UA_PIXELS"] = "240x320"
-      google_screen_res.should == { :u_w => "240", :u_h => "320" }
+      google_screen_res(@request).should == { :u_w => "240", :u_h => "320" }
 
       reset_request
       @request.env["HTTP_X_UP_DEVCAP_SCREENPIXELS"] = "200,300"
-      google_screen_res.should == { :u_w => "200", :u_h => "300" }
+      google_screen_res(@request).should == { :u_w => "200", :u_h => "300" }
 
       reset_request
       @request.env["HTTP_X_JPHONE_DISPLAY"] = "250*330"
-      google_screen_res.should == { :u_w => "250", :u_h => "330" }
+      google_screen_res(@request).should == { :u_w => "250", :u_h => "330" }
 
       reset_request
       @request.env["HTTP_UA_PIXELS"] = "240"
-      google_screen_res.should == {}
+      google_screen_res(@request).should == {}
 
       reset_request
-      google_screen_res.should == {}
+      google_screen_res(@request).should == {}
     end
   end
 
   describe "::google_muid" do
     it "should return 'muid' parameter" do
       @request.env["HTTP_X_DCMGUID"] = "XXXXX000000"
-      google_muid.should == { :muid => "XXXXX000000" }
+      google_muid(@request).should == { :muid => "XXXXX000000" }
 
       reset_request
       @request.env["HTTP_X_UP_SUBNO"] = "00000000000000_mj.ezweb.ne.jp"
-      google_muid.should == { :muid => "00000000000000_mj.ezweb.ne.jp" }
+      google_muid(@request).should == { :muid => "00000000000000_mj.ezweb.ne.jp" }
 
       reset_request
       @request.env["HTTP_X_JPHONE_UID"] = "aaaaaaaaaaaaaaaa"
-      google_muid.should == { :muid => "aaaaaaaaaaaaaaaa" }
+      google_muid(@request).should == { :muid => "aaaaaaaaaaaaaaaa" }
 
       reset_request
       @request.env["HTTP_X_EM_UID"] = "bbbbbbbbbbbbbbbb"
-      google_muid.should == { :muid => "bbbbbbbbbbbbbbbb" }
+      google_muid(@request).should == { :muid => "bbbbbbbbbbbbbbbb" }
 
       reset_request
-      google_muid.should == {}
+      google_muid(@request).should == {}
     end
   end
 
   describe "::google_via_and_accept" do
     it "should return 'via' and 'accept' parameters when user agent is undefined" do
       @request.env["HTTP_VIA"] = "via"
-      google_via_and_accept(nil).should == { :via => "via" }
+      google_via_and_accept(@request, nil).should == { :via => "via" }
 
       reset_request
       @request.env["HTTP_ACCEPT"] = "accept"
-      google_via_and_accept(nil).should == { :accept => "accept" }
+      google_via_and_accept(@request, nil).should == { :accept => "accept" }
 
       reset_request
       @request.env["HTTP_VIA"] = "via!"
       @request.env["HTTP_ACCEPT"] = "accept!"
-      google_via_and_accept(nil).should == { :via => "via!", :accept => "accept!" }
+      google_via_and_accept(@request, nil).should == { :via => "via!", :accept => "accept!" }
 
       reset_request
-      google_via_and_accept("ua").should == {}
+      google_via_and_accept(@request, "ua").should == {}
 
       reset_request
       @request.env["HTTP_VIA"] = "via!!"
       @request.env["HTTP_ACCEPT"] = "accept!!"
-      google_via_and_accept("ua").should == {}
+      google_via_and_accept(@request, "ua").should == {}
     end
   end
 end
