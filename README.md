@@ -1,8 +1,8 @@
-== Mobile Adsense for Sinatra
+# Mobile Adsense for Sinatra #
 
 A Sinatra extension that provides a helper to show Google Adsense for Mobile.
 
-=== Usage
+## Usage ##
 
 To use it, just use the `mobile_adsense` helper in your application template. A `:client` option must be provided:
 
@@ -14,7 +14,7 @@ And that's it! You can pass any options.
 
 The `mobile_adsense` helper accesses Google server to get advertisements. If an error occurs doing the request, it returns an empty string. Exceptions are **not** raised.
 
-=== Install
+## Install ##
 
 You can install manually the gem:
 
@@ -34,7 +34,7 @@ Finally, register the extension in your Sinatra application:
       # Your app code goes here
     end
 
-=== Legal
+## Legal ##
 
 This extension is mostly based on the Rails [plugin](http://github.com/milk1000cc/mobile_adsense) by milk1000cc.
 
