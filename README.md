@@ -18,7 +18,7 @@ The `mobile_adsense` helper accesses Google server to get advertisements. If an 
 
 You can install manually the gem:
 
-    $ gem install munshkr-sinatra-mobile-adsense -s http://gems.github.com/
+    $ gem install sinatra-mobile-adsense
 
 Or, if you use Bundler, add this line on your Gemfile:
 
